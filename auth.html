@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chat - Authentication</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">
+	<link rel="stylesheet" type="text/css" href="style/auth.css">
+	<link rel="stylesheet" type="text/css" href="style/sweetalert2.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/sweetalert2.js"></script>
+</head>
+<body>
+	<div id="loading">Loading&#8330;</div>
+	<div class="bg"></div>
+
+	<div class="auth login">
+		<p class="title">Chat</p>
+		<form method="POST" id="login">
+			<input type="text" name="email" class="field" placeholder="E-mail ou username" required/>
+			<input type="password" name="password" class="field" placeholder="Senha" required/>
+			<button>Entrar</button>
+		</form>
+		<p class="toogle" onclick="$('.register').fadeIn()">Não possuo conta</p>
+	</div>
+
+	<div class="auth register">
+		<p class="title">Criar uma conta</p>
+		<form method="POST" id="register">
+			<input type="text" name="email" class="field" placeholder="E-mail" required/>
+			<input type="text" minlength="5" maxlength="15" name="username" class="field" placeholder="Username" required/>
+			<input type="password" minlength="8" name="password" class="field" placeholder="Senha" required/>
+			<input type="password" minlength="8" name="Rpassword" class="field" placeholder="Repetir senha" required/>
+			<button>Criar conta</button>
+		</form>
+		<p class="toogle"  onclick="$('.register').fadeOut()">Já possuo uma conta</p>
+	</div>
+	<div id="link"></div>
+	<script>
+		$("#login").on('submit',function(e){
+			e.preventDefault();
+			$.ajax({
+				type:'POST',
+				url:'process/login.php',
+				data:$('#login').serialize(),
+				beforeSend: function(){
+					$('loading').show();
+				},
+				complete: function(){
+					$('loading').hide();
+				},
+				success: function(data){
+					$("#link").html(data);
+				}
+			})
+		});
+
+		$("#register").on('submit',function(e){
+			e.preventDefault();
+			$.ajax({
+				type:'POST',
+				url:'process/register.php',
+				data:$('#register').serialize(),
+				beforeSend: function(){
+					$('loading').show();
+				},
+				complete: function(){
+					$('loading').hide();
+				},
+				success: function(data){
+					$("#link").html(data);
+				}
+			})
+		});
+	</script>
+</body>
+</html>

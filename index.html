@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chat</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">
+	<link rel="stylesheet" type="text/css" href="style/homepage.css">
+	<link rel="stylesheet" type="text/css" href="style/inbox.css">
+	<link rel="stylesheet" type="text/css" href="style/chat.css">
+	<link rel="stylesheet" type="text/css" href="style/profile.css">
+	<link rel="stylesheet" type="text/css" href="style/sweetalert2.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/sweetalert2.js"></script>
+</head>
+<body>
+	<div id="loading">Carregando conversas...&#8230;</div>
+
+	<div id="inbox" class="column">
+		<p class="title">Conversas</p>
+		<input type="text" maxlength="15" name="username" class="searchField" placeholder="Pesquisar usuário">
+		<div id="searchContainer"></div>
+		<div class="container"></div>
+	</div>
+
+	<div id="chat" class="column"></div>
+
+	<div id="profile" class="column">
+		<p class="title">Perfil</p>
+		<div class="container"></div>
+		<div class="menu">
+			<button>Sair</button>
+		</div>
+	</div>
+
+
+
+<script>
+function loadInbox() {
+	
+}
+
+function loadProfile(id = 0) {
+	$.ajax({
+		url: 'process/profile.php?id='+id,
+		success: function(data){
+			$('#profile .container').html(data);
+		},
+		error: function(error){
+			Swal.fire({
+				title: 'Erro',
+				text: error.statusText,
+				icon: 'error',
+				confirmButtonText: 'Ok'
+			})
+		}
+	})
+}
+
+function chat(id = 0) {
+
+}
+
+$(document).ready(function(){
+	setInterval(() => {
+		loadInbox();
+	},3000);
+	loadProfile();
+	chat();
+})	
+</script>
+</body>
+</html>
