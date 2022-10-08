@@ -30,3 +30,18 @@
 	font-size: 24pt;
 	padding: 20px 30px;
 }
+
+div.empty img {
+	display: block;
+	margin: auto;
+	max-width: 90%;
+	max-height: 500px;
+}
+
+div.empty p{
+	padding: auto 10%;
+	text-align: center;
+	color: #666;
+	margin-top: 20px;
+	font-size: 14pt;
+}

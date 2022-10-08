@@ -22,7 +22,7 @@
         <?php
     } else {
         // Query
-        $stmt = $con->prepare("SELECT Username, Picture, Online, Creation FROM User WHERE (Id = ?) LIMIT 1");
+        $stmt = $con->prepare("SELECT username, picture, online, creation FROM user WHERE (id = ?) LIMIT 1");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $user = $stmt->get_result()->fetch_assoc();
@@ -57,19 +57,14 @@
                 $('#userImg').attr('src', e.target.result);
                 var formData = new FormData($("#uploadPic")[0]);
                 $.ajax({
-                    type: 'post',
+                    type: 'POST',
                     url: 'process/updateProfile.php',
                     data: formData,
                     cache: false,
                     contentType: false,
                     processData: false,
                     error: function (error) {
-                        Swal.fire({
-                            title: 'Imagem não alterada!',
-                            text: error.statusText,
-                            icon: 'error',
-                            confirmButtonText: 'Tentar novamente'
-                        })
+                        alert('Erro ao carregar a imagem');
                     }
                 });
             }

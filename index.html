@@ -18,7 +18,7 @@
 
 	<div id="inbox" class="column">
 		<p class="title">Conversas</p>
-		<input type="text" maxlength="15" name="username" class="searchField" placeholder="Pesquisar usuário">
+		<input type="text" maxlength="15" name="username" class="searchField" onkeyup="search()" placeholder="Pesquisar usuário">
 		<div id="searchContainer"></div>
 		<div class="container"></div>
 	</div>
@@ -37,7 +37,20 @@
 
 <script>
 function loadInbox() {
-	
+	$.ajax({
+		url: 'process/inbox.php',
+		success: function(data){
+			$('#inbox .container').html(data);
+		},
+		error: function(error){
+			Swal.fire({
+				title: 'Erro',
+				text: error.statusText,
+				icon: 'error',
+				confirmButtonText: 'Ok'
+			})
+		}
+	});
 }
 
 function loadProfile(id = 0) {
@@ -54,12 +67,41 @@ function loadProfile(id = 0) {
 				confirmButtonText: 'Ok'
 			})
 		}
-	})
+	});
 }
 
 function chat(id = 0) {
-
+	$.ajax({
+		url: 'process/chat.php?id='+id,
+		success: function(data){
+			$('#chat').html(data);
+		},
+		error: function(error){
+			Swal.fire({
+				title: 'Erro',
+				text: error.statusText,
+				icon: 'error',
+				confirmButtonText: 'Ok'
+			})
+		}
+	});
 }
+
+function search(){
+	var term = $('input.searchField').val();
+	if(term.length >= 3){
+		$.ajax({
+			url: 'process/search.php?term=' + term,
+			success: function(data){
+				$('#searchContainer').html(data);
+				$('#searchContainer').show();
+			}
+		});
+	}else{
+		$('#searchContainer').hide();
+	}
+}
+
 
 $(document).ready(function(){
 	setInterval(() => {

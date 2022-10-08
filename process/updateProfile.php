@@ -18,22 +18,23 @@
         $imagePath = "../profilePics/";
 
         if (is_uploaded_file($imagetemp)) {
-            if (move_uploaded_file($imagetemp, $imagePath . $imagename)) {
+            if (move_uploaded_file($imagetemp, $imagePath.$imagename)) {
+                echo "<script>alert('Erro ao carregar a imagem')</script>";
                 $stmt = $con->prepare("UPDATE user SET picture = ? WHERE id = ?");
                 $stmt->bind_param("si", $imagename, $uid);
                 $stmt->execute();
                 if ($stmt) {
                     return true;
                 } else {
-                    die(header("HTTP/1.0 401 Erro ao guardar imagem na base de dados"));
+                    die("<script>alert('Erro ao guardar a imagem no banco de dados')</script>");
                 }
             } else {
-                die(header("HTTP/1.0 401 Erro ao guardar imagem"));
+                die("<script>alert('Erro ao guardar a imagem')</script>");
             }
         } else {
-            die(header("HTTP/1.0 401 Erro ao carregar imagem"));
+            die("<script>alert('Erro ao carregar a imagem')</script>");
         }
     } else {
-        die(header("HTTP/1.0 401 Faltam parametros"));
+        die(header("<script>alert('Faltam parametros')</script>"));
     }
 ?>
